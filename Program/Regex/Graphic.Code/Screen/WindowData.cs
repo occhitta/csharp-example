@@ -133,7 +133,7 @@ internal sealed class WindowData : AbstractScreenData {
 	/// <returns>設定一覧</returns>
 	private static ConfigList? CreateConfigList() {
 		try {
-			return ConfigList.Create(@"D:\Source\CSharp\Occhitta\Example\Program\Regex\Graphic.Code\Template.xml");
+			return ConfigList.Create(@"Template.xml");
 		} catch {
 			//return null;
 			throw;
