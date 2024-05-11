@@ -135,8 +135,7 @@ internal sealed class WindowData : AbstractScreenData {
 		try {
 			return ConfigList.Create(@"Template.xml");
 		} catch {
-			//return null;
-			throw;
+			return null;
 		}
 	}
 	#endregion 内部メソッド定義(CreateConfigList)
