@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- 基本設定 -->
+  <PropertyGroup>
+    <!-- 出力種別設定 -->
+    <OutputType>Exe</OutputType>
+    <!-- 実行環境設定 -->
+    <TargetFramework>net8.0</TargetFramework>
+    <!-- 記述制約設定 -->
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+</Project>

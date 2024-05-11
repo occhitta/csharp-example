@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- 基本設定 -->
+  <PropertyGroup>
+    <!-- 出力種別設定 -->
+    <OutputType>WinExe</OutputType>
+    <!-- 実行環境設定 -->
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <!-- 記述制約設定 -->
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+  </PropertyGroup>
+  <!-- 参照設定 -->
+  <ItemGroup>
+    <PackageReference Include="Occhitta.Libraries.Common" Version="1.0.0" />
+    <PackageReference Include="Occhitta.Libraries.Screen" Version="1.0.0-alpha20240414-01" />
+  </ItemGroup>
+</Project>

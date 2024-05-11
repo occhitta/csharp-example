@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+  <template name="日付形式チェック"
+            code="(?&lt;Y&gt;[0-9]{4})-(?&lt;M&gt;[0-9]{1,2})-(?&lt;D&gt;[0-9]{1,2})"><![CDATA[2001-02-03]]></template>
+</templates>
