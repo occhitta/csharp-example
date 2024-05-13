@@ -99,12 +99,14 @@ internal static class MainModule {
 
 		// 設定処理
 		Regist(source.Resources,
+			"/Screen/GlobalData.xaml",
 			"/Struct/SourceData.xaml",
 			"/Struct/BranchData.xaml",
 			"/Struct/DivideList.xaml",
 			"/Struct/DetailList.xaml",
 			"/Struct/DivideData.xaml",
-			"/Struct/DetailData.xaml");
+			"/Struct/DetailData.xaml",
+			"/Screen/SearchData.xaml");
 
 		source.Run();
 	}

@@ -5,14 +5,14 @@ using Occhitta.Libraries.Common;
 namespace Occhitta.Example.Config;
 
 /// <summary>
-/// 設定一覧クラスです。
+/// 検索設定一覧クラスです。
 /// /// </summary>
-internal sealed class ConfigList : IReadOnlyList<ConfigData> {
+internal sealed class SearchList : IReadOnlyList<SearchData> {
 	#region メンバー変数定義
 	/// <summary>
 	/// 要素配列
 	/// </summary>
-	private readonly ConfigData[] source;
+	private readonly SearchData[] source;
 	#endregion メンバー変数定義
 
 	#region プロパティー定義
@@ -26,36 +26,24 @@ internal sealed class ConfigList : IReadOnlyList<ConfigData> {
 	/// </summar>
 	/// <param name="index">要素番号</param>
 	/// <value>要素情報</value>
-	public ConfigData this[int index] => this.source[index];
+	public SearchData this[int index] => this.source[index];
 	#endregion プロパティー定義
 
 	#region 生成メソッド定義
 	/// <summary>
-	/// 設定一覧を生成します。
+	/// 検索設定一覧を生成します。
 	/// </summary>
 	/// <param name="source">要素配列</param>
-	private ConfigList(ConfigData[] source) {
-		this.source = source;
+	private SearchList(SearchData[]? source) {
+		this.source = source ?? [];
 	}
 	/// <summary>
-	/// 設定一覧を生成します。
+	/// 検索設定一覧を生成します。
 	/// </summary>
 	/// <param name="source">設定情報</param>
-	/// <returns>設定一覧</returns>
-	private static ConfigList Create(XmlNode source) =>
-		new(source.GetList("template", ConfigData.Create));
-	/// <summary>
-	/// 設定一覧を生成します。
-	/// </summary>
-	/// <param name="source">設定位置</param>
-	/// <returns>設定情報</returns>
-	public static ConfigList Create(string source) {
-		var parser = new XmlDocument();
-		parser.Load(source);
-		#pragma warning disable CS8604
-		return Create(parser.DocumentElement);
-		#pragma warning restore CS8604
-	}
+	/// <returns>検索設定一覧</returns>
+	public static SearchList Create(XmlNode? source) =>
+		new(source?.GetList("search", SearchData.Create));
 	#endregion 生成メソッド定義
 
 	#region 実装メソッド定義
@@ -72,7 +60,7 @@ internal sealed class ConfigList : IReadOnlyList<ConfigData> {
 	/// 反復処理を取得します。
 	/// </summary>
 	/// <returns>反復処理</returns>
-	IEnumerator<ConfigData> IEnumerable<ConfigData>.GetEnumerator() {
+	IEnumerator<SearchData> IEnumerable<SearchData>.GetEnumerator() {
 		foreach (var choose in this.source) {
 			yield return choose;
 		}

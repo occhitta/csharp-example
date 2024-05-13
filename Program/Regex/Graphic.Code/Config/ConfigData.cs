@@ -1,86 +1,74 @@
-using System;
-using System.Text.RegularExpressions;
 using System.Xml;
 using Occhitta.Libraries.Common;
 
 namespace Occhitta.Example.Config;
 
 /// <summary>
-/// 設定情報クラスです。
+/// 基本設定情報クラスです。
 /// </summary>
 internal sealed class ConfigData {
+	#region メンバー変数定義
+	/// <summary>
+	/// 読込位置
+	/// </summary>
+	private static string sourceFile = "Template.xml";
+	/// <summary>
+	/// 設定情報
+	/// </summary>
+	private static ConfigData? sourceData = null;
+	#endregion メンバー変数定義
+
 	#region プロパティー定義
 	/// <summary>
-	/// 選択名称を取得します。
+	/// 読込位置を取得または設定します。
 	/// </summary>
-	/// <value>選択名称</value>
-	public string SelectName {
-		get;
+	/// <value>読込位置</value>
+	public static string SourceFile {
+		get => sourceFile;
+		set => sourceFile = value;
 	}
 	/// <summary>
-	/// 解析書式を取得します。
+	/// 設定情報を取得します。
 	/// </summary>
-	/// <value>解析書式</value>
-	public string FormatText {
-		get;
-	}
+	/// <returns>設定情報</returns>
+	public static ConfigData SourceData => sourceData ??= Create(SourceFile);
 	/// <summary>
-	/// 解析種別を取得します。
+	/// 検索設定一覧を取得します。
 	/// </summary>
-	/// <value>解析種別</value>
-	public RegexOptions OptionData {
-		get;
-	}
-	/// <summary>
-	/// 解析内容を取得します。
-	/// </summary>
-	/// <value>解析内容</value>
-	public string? SourceText {
+	/// <value>検索設定一覧</value>
+	public SearchList SearchList {
 		get;
 	}
 	#endregion プロパティー定義
 
 	#region 生成メソッド定義
 	/// <summary>
-	/// 設定情報を生成します。
+	/// 基本設定情報を生成します。
 	/// </summary>
-	/// <param name="selectName">選択名称</param>
-	/// <param name="formatText">解析書式</param>
-	/// <param name="optionData">解析種別</param>
-	/// <param name="sourceText">解析内容</param>
-	private ConfigData(string selectName, string formatText, RegexOptions optionData, string? sourceText) {
-		SelectName = selectName;
-		FormatText = formatText;
-		OptionData = optionData;
-		SourceText = sourceText;
+	/// <param name="searchList">検索設定一覧</param>
+	private ConfigData(SearchList searchList) {
+		SearchList = searchList;
 	}
 	/// <summary>
-	/// 設定情報を生成します。
+	/// 基本設定情報を生成します。
 	/// </summary>
 	/// <param name="source">設定情報</param>
-	/// <returns>設定情報</returns>
-	public static ConfigData Create(XmlNode source) {
-		var selectName = source.GetText("name");
-		var formatText = source.GetText("code");
-		var optionData = source.GetText("mode", null);
-		var sourceText = source.GetText();
-		return new(selectName, formatText, ToOptionData(optionData), sourceText);
+	/// <returns>基本設定情報</returns>
+	private static ConfigData Create(XmlNode source) {
+		var searchList = SearchList.Create(source.GetData("searches", null));
+		return new(searchList);
+	}
+	/// <summary>
+	/// 基本設定情報を生成します。
+	/// </summary>
+	/// <param name="source">設定位置</param>
+	/// <returns>基本設定情報</returns>
+	private static ConfigData Create(string source) {
+		var parser = new XmlDocument();
+		parser.Load(source);
+		#pragma warning disable CS8604
+		return Create(parser.DocumentElement);
+		#pragma warning restore CS8604
 	}
 	#endregion 生成メソッド定義
-
-	#region 内部メソッド定義
-	/// <summary>
-	/// 解析種別へ変換します。
-	/// </summary>
-	/// <param name="source"></param>
-	private static RegexOptions ToOptionData(string? source) {
-		if (String.IsNullOrEmpty(source)) {
-			return default;
-		} else if (Enum.TryParse<RegexOptions>(source, out var result)) {
-			return result;
-		} else {
-			return default;
-		}
-	}
-	#endregion 内部メソッド定義
 }
